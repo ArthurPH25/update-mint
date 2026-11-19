@@ -1,0 +1,23 @@
+#!/usr/bin/python3 -I
+# update-mint:tool-file (marker used by install.sh and uninstall.sh; do not remove)
+import os
+import sys
+
+_here = os.path.dirname(os.path.realpath(__file__))
+for _candidate in (
+    os.path.join(_here, "..", "lib"),
+    os.path.join(_here, "..", "lib", "update-mint"),
+    "/usr/local/lib/update-mint",
+):
+    _candidate = os.path.normpath(_candidate)
+    if os.path.isfile(os.path.join(_candidate, "update_mint", "__init__.py")):
+        sys.path.insert(0, _candidate)
+        break
+else:
+    sys.stderr.write("update-mint: program files not found. Reinstall using install.sh.\n")
+    sys.exit(1)
+
+from update_mint.main import main
+
+if __name__ == "__main__":
+    sys.exit(main())
