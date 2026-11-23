@@ -289,12 +289,6 @@ def parse_fwupd_json(text: str) -> List[FirmwareDevice]:
 
 
 def probe_firmware(ctx, refresh: bool = False) -> None:
-    '''Looks for new firmware through fwupd/LVFS WITHOUT installing anything. Respects the user configuration.
-
-    By default it is READ-ONLY: it uses the firmware metadata already stored on this computer. Only with
-    ``refresh=True`` does it run ``fwupdmgr refresh`` (which downloads and stores new LVFS metadata); the planner
-    does that only after the safety safeguards, never during the initial analysis.
-    '''
     st = ctx.state
     if not ctx.has_tool("fwupdmgr"):
         st.firmware_missing_reason = 'fwupd is not installed'

@@ -13,10 +13,6 @@ ok()  { printf '%s✔%s %s\n' "$color_ok" "$color_reset" "$*"; }
 warn()  { printf '%s⚠%s %s\n' "$color_warning" "$color_reset" "$*"; }
 fail() { printf '%s✖%s %s\n' "$color_error" "$color_reset" "$*" >&2; exit 1; }
 
-# The manifest is DATA, never trusted blindly. An entry may be deleted only if it is EXACTLY the command ($BIN) or a
-# file inside $LIB or $DOC, with no "." / ".." / empty path components and no control characters, and (when it
-# exists) its parent directory, physically resolved, must still lie inside the tool's own directories: a symbolic
-# link used as an intermediate directory can no longer lead the removal elsewhere.
 manifest_entry_ok() {
   local p="$1" allowed real_parent real_allowed
   case "$p" in

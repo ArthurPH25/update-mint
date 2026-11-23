@@ -91,14 +91,6 @@ LOCK_UNAVAILABLE = -1
 
 
 def single_instance() -> Optional[int]:
-    '''Lock (flock) that prevents simultaneous runs.
-
-    Returns the file descriptor, ``None`` if another run exists, or ``LOCK_UNAVAILABLE`` if no lock file could be
-    created at all (the caller must then NOT continue: nothing would prevent two simultaneous runs).
-    The lock is a kernel ``flock`` on an empty file (no PID file): it is released automatically when the process
-    ends, however it ends, so a crash can never leave an inconsistent lock behind. The file is deliberately never
-    deleted (deleting a flock file opens a race between two instances). The descriptor is not inherited by children.
-    '''
     candidates = ["/run/lock/update-mint.lock", f"/tmp/update-mint-{os.getuid()}.lock"]
     for path in candidates:
         try:
